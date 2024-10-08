@@ -1,0 +1,37 @@
+[gd_scene load_steps=7 format=3 uid="uid://deda84dhhibb3"]
+
+[ext_resource type="PackedScene" uid="uid://jihsqcv1my3a" path="res://control.tscn" id="1_nvhpj"]
+[ext_resource type="Script" path="res://QuadInput.gd" id="1_pngux"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_hnda6"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_j2yw1"]
+viewport_path = NodePath("MeshInstance3D/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c1l41"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_j2yw1")
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_el6bv"]
+size = Vector3(1, 1, 0.001)
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("QuadMesh_hnda6")
+surface_material_override/0 = SubResource("StandardMaterial3D_c1l41")
+script = ExtResource("1_pngux")
+
+[node name="SubViewport" type="SubViewport" parent="MeshInstance3D"]
+
+[node name="Control" parent="MeshInstance3D/SubViewport" instance=ExtResource("1_nvhpj")]
+
+[node name="Area3D" type="Area3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/Area3D"]
+shape = SubResource("BoxShape3D_el6bv")
